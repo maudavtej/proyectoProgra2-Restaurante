@@ -37,57 +37,63 @@ int validacion(int min, int max)
 }
 float menuVentas(char pedido[])
 {
+
     int eleccion, cantidad, opcSab, opcTam, opcion;
     float total = 0;
-
-    // Arreglos de estructuras
     producto hamburguesas[4] = {
         {"Hamburguesa Sencilla", 45},
-        {"Hamburguesa Con Queso", 65},
+        {"Hamburguesa Con queso", 65},
         {"Hamburguesa Hawaiana", 90},
         {"Hamburguesa Doble queso", 85}};
-
     prod2 refresco[3] = {
-        {"Coca-Cola", 45, 35},
-        {"Sprite", 45, 35},
-        {"Manzanita", 45, 35}};
-
+        {"Coca-Cola", 35, 45},
+        {"Sprite", 35, 45},
+        {"Manzanita", 35, 45}};
     producto pay[3] = {
         {"Pay de Manzana", 30},
         {"Pay de Pinia", 40},
         {"Pay de Queso", 35}};
-
     producto papas[2] = {
-        {"Papas Grandes", 45},
-        {"Papas Chicas", 35}};
-
+        {"Papas grandes", 45},
+        {"Papas chicas", 35}};
     producto helado[2] = {
-        {"Helado Chocolate", 30},
-        {"Helado Vainilla", 25}};
+        {"Chocolate", 30},
+        {"Vainilla", 25}};
+    producto paquete1[1] = {
+        {"PAQUETE INDIVIDUAL", 110}};
+    producto paquete2[1] = {
+        {"COMBO", 239}
 
-    producto paquetes[2] = {
-        {"PAQUETE INDIVIDUAL", 110},
-        {"COMBO", 239}};
+    };
 
     do
     {
-        printf("\n============ MENU ===========\n");
-        printf("1. Hamburguesas\n2. Adicionales\n3. Combos\n4. Pagar\n");
+        printf("\n============ MENU===========\n");
+        printf("Bienvenido a MAC Burguer\nElija una opcion\n");
+        printf("1.Hamburguesas\n2.Adicionales\n3.Combo\n4.Pagar\n");
         eleccion = validacion(1, 4);
-
         switch (eleccion)
         {
+
         case 1:
-            printf("¿Cuantas hamburguesas desea?: ");
-            cantidad = validacion(1, 10);
+            printf("Ingrese el numero de hamburguesas que desea ordenar: \n");
+            cantidad = validacion(1, 50);
+
             for (int i = 0; i < cantidad; i++)
             {
-                printf("Sabor para la hamburguesa #%d:\n", i + 1);
-                for (int j = 0; j < 4; j++)
+                printf("Elija el sabor de la hamburguesa #%d:\n", i + 1);
+                for (int i = 0; i < 4; i++)
                 {
-                    printf("%d. %s $%.2f\n", j + 1, hamburguesas[j].nombre, hamburguesas[j].precio);
+                    printf("%d.%s\n", i + 1, hamburguesas[i].nombre);
                 }
-                opcion = validacion(1, 4);
+
+                opcion = validacion(1, 5);
+
+                if (opcion == 5)
+                {
+                    printf("Regresando al menu principal...\n");
+                    break;
+                }
                 strcat(pedido, hamburguesas[opcion - 1].nombre);
                 strcat(pedido, "\n");
                 total += hamburguesas[opcion - 1].precio;
@@ -95,71 +101,151 @@ float menuVentas(char pedido[])
             break;
 
         case 2:
-            printf("1.Papas\n2.Refrescos\n3.Helados\n4.Pay\n5.Regresar\n");
+            printf("1.Papas\n2.Refrescos\n3.Helados\n4.Pay\n5.Salir\n");
             opcion = validacion(1, 5);
+
             switch (opcion)
             {
             case 1:
-                printf("1.Grandes\n2.Chicas\n");
-                opcTam = validacion(1, 2);
-                strcat(pedido, papas[opcTam - 1].nombre);
-                strcat(pedido, "\n");
-                total += papas[opcTam - 1].precio;
+                printf("Ingrese cuantas papas desea ordenar: \n");
+                cantidad = validacion(1, 10);
+                for (int i = 0; i < cantidad; i++)
+                {
+                    printf("Seleccione el tamanio de sus papas #%d\n", i + 1);
+                    printf("1.Grandes\n2.Chicas\n3.Salir\n");
+                    opcTam = validacion(1, 3);
+                    if (opcTam == 3)
+                    {
+                        printf("Regresando al menu principal...\n");
+                        break;
+                    }
+                    strcat(pedido, papas[opcTam - 1].nombre);
+                    strcat(pedido, "\n");
+                    total += papas[opcTam - 1].precio;
+                }
                 break;
 
             case 2:
-                printf("Sabor:\n1.Coca\n2.Sprite\n3.Manzanita\n");
-                opcSab = validacion(1, 3);
-                printf("1.Grande\n2.Chico\n");
-                opcTam = validacion(1, 2);
-
-                strcat(pedido, refresco[opcSab - 1].nombre);
-                if (opcTam == 1)
+                printf("Ingrese el numero de bebidas a ordenar:\n");
+                cantidad = validacion(1, 20);
+                for (int i = 0; i < cantidad; i++)
                 {
-                    strcat(pedido, " (G), ");
-                    strcat(pedido, "\n ");
-                    total += refresco[opcSab - 1].precioG;
-                }
-                else
-                {
-                    strcat(pedido, " (Ch)");
-                    strcat(pedido, "\n");
-                    total += refresco[opcSab - 1].precioCh;
+                    printf("Elija el sabor de su bebida #%d u oprima 0 para regresar\n", i + 1);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        printf("%d.%s\n", i + 1, refresco[i].nombre);
+                    }
+                    opcion = validacion(0, 3);
+                    if (opcion == 0)
+                    {
+                        printf("Regresando al menu principal...\n");
+                    }
+                    else
+                    {
+                        printf("1.Grande\n2.Chico\n");
+                        scanf("%d", &opcTam);
+                        strcat(pedido, refresco[opcion - 1].nombre);
+                        if (opcTam == 1)
+                        {
+                            strcat(pedido, refresco[opcion - 1].nombre);
+                            total += refresco[opcion - 1].precioG;
+                            strcat(pedido, "\n");
+                        }
+                        else if (opcTam == 2)
+                        {
+                            strcat(pedido, refresco[opcion - 1].nombre);
+                            strcat(pedido, "\n");
+                            total += refresco[opcion - 1].precioCh;
+                        }
+                    }
                 }
                 break;
 
             case 3:
-                printf("1.Chocolate\n2.Vainilla\n");
-                opcSab = validacion(1, 2);
-                strcat(pedido, helado[opcSab - 1].nombre);
-                strcat(pedido, ", ");
-                total += helado[opcSab - 1].precio;
+                printf("Elija el número de helados a ordenar: \n");
+                cantidad = validacion(1, 5);
+                for (int i = 0; i < cantidad; i++)
+                {
+                    printf("Sabor del helado #%d:\n1.Chocolate\n2.Vainilla\n", i + 1);
+                    scanf("%d", &opcSab);
+                    if (opcSab == 1)
+                    {
+                        strcat(pedido, helado[opcSab - 1].nombre);
+                        strcat(pedido, " ");
+                        total += helado[opcSab - 1].precio;
+                    }
+                    else if (opcSab == 2)
+                    {
+                        strcat(pedido, helado[opcSab - 1].nombre);
+                        strcat(pedido, " ");
+                        total += helado[opcSab - 1].precio;
+                    }
+                    else
+                    {
+                        printf("Opcion invalida.");
+                        i--;
+                    }
+                }
+                break;
+            case 4:
+                printf("Indique el numero de pays a ordenar: \n");
+                cantidad = validacion(1, 5);
+                for (int i = 0; i < cantidad; i++)
+                {
+                    printf("Elija el sabor del pay #%d o presione 0 para regresar: \n", i + 1);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        printf("%d.%s\n", i + 1, pay[i].nombre);
+                    }
+                    opcSab = validacion(0, 3);
+                    if (opcSab == 0)
+                    {
+                        printf("Regresando al menu...");
+                        break;
+                    }
+                    strcat(pedido, pay[opcSab - 1].nombre);
+                    strcat(pedido, " ");
+                    total += pay[opcSab - 1].precio;
+                }
+                break;
+            case 5:
+                printf("Regresando al menu...");
                 break;
 
-            case 4:
-                for (int j = 0; j < 3; j++)
-                    printf("%d.%s\n", j + 1, pay[j].nombre);
-                opcSab = validacion(1, 3);
-                strcat(pedido, pay[opcSab - 1].nombre);
-                strcat(pedido, "\n");
-                total += pay[opcSab - 1].precio;
-                break;
+            default:
+                printf("Opción inválida\n");
             }
             break;
 
         case 3:
-            printf("1. Individual $110\n2. Paquete Grande $239\n3. Salir\n");
-            opcion = validacion(1, 3);
-            if (opcion <= 2)
+            printf("1.Individual\n2.Paquete grande\n3.Salir");
+            eleccion = validacion(1, 3);
+            if (eleccion == 1)
             {
-                strcat(pedido, paquetes[opcion - 1].nombre);
-                strcat(pedido, "\n");
-                total += paquetes[opcion - 1].precio;
+                printf("-Hamburguesa sencilla\n-Papas chicas\n-Refresco chico\n-Helado");
+                printf("%s", paquete1[eleccion - 1].nombre);
+                strcat(pedido, paquete1[eleccion - 1].nombre);
+                strcat(pedido, " ");
+                total += paquete1[eleccion - 1].precio;
+            }
+            else if (eleccion == 2)
+            {
+                printf("Combo:\n-Hamburguesa Hawaiana+Sencilla\n-Refresco Grande+1 Ref.chico\n-Papas grandes\n-Pay de manzana");
+                strcat(pedido, paquete2[eleccion - 1].nombre);
+                strcat(pedido, " ");
+                total += paquete2[eleccion - 1].precio;
             }
             break;
-        }
-    } while (eleccion != 4);
 
+        case 4:
+            printf("Finalizando pedido...\n");
+            break;
+
+        default:
+            printf("Opción inválida\n");
+        }
+
+    } while (eleccion != 4);
     return total;
 }
 int main()
@@ -171,8 +257,8 @@ int main()
     printf("===== TICKET ====\n");
     printf("= Orden Nº %d =\n", folio);
     printf("==== PEDIDO ====\n");
-    printf("%s\n", pedido);
+    printf("%s", pedido);
     printf("=== TOTAL ===\n");
-    printf("%.2f\n", total);
+    printf("%.2f", total);
     return 0;
 }
