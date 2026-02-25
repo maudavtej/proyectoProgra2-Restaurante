@@ -171,13 +171,13 @@ float menuVentas(char pedido[])
                     if (opcSab == 1)
                     {
                         strcat(pedido, helado[opcSab - 1].nombre);
-                        strcat(pedido, " ");
+                        strcat(pedido, "\n");
                         total += helado[opcSab - 1].precio;
                     }
                     else if (opcSab == 2)
                     {
                         strcat(pedido, helado[opcSab - 1].nombre);
-                        strcat(pedido, " ");
+                        strcat(pedido, "\n");
                         total += helado[opcSab - 1].precio;
                     }
                     else
@@ -204,7 +204,7 @@ float menuVentas(char pedido[])
                         break;
                     }
                     strcat(pedido, pay[opcSab - 1].nombre);
-                    strcat(pedido, " ");
+                    strcat(pedido, "\n");
                     total += pay[opcSab - 1].precio;
                 }
                 break;
@@ -225,14 +225,14 @@ float menuVentas(char pedido[])
                 printf("-Hamburguesa sencilla\n-Papas chicas\n-Refresco chico\n-Helado");
                 printf("%s", paquete1[eleccion - 1].nombre);
                 strcat(pedido, paquete1[eleccion - 1].nombre);
-                strcat(pedido, " ");
+                strcat(pedido, "\n");
                 total += paquete1[eleccion - 1].precio;
             }
             else if (eleccion == 2)
             {
                 printf("Combo:\n-Hamburguesa Hawaiana+Sencilla\n-Refresco Grande+1 Ref.chico\n-Papas grandes\n-Pay de manzana");
                 strcat(pedido, paquete2[eleccion - 1].nombre);
-                strcat(pedido, " ");
+                strcat(pedido, "\n");
                 total += paquete2[eleccion - 1].precio;
             }
             break;
@@ -259,6 +259,6 @@ int main()
     printf("==== PEDIDO ====\n");
     printf("%s", pedido);
     printf("=== TOTAL ===\n");
-    printf("%.2f", total);
+    printf("$%.2f", total);
     return 0;
 }
